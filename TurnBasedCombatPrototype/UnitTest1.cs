@@ -14,7 +14,7 @@ namespace TurnBasedCombatPrototype
         [Test]
         public void Test1()
         {
-            //testArray = new int[] { 1, 2, 3 };
+            testArray = new int[] { 1, 2, 3 };
             //FillTestArray(0);
 
             Assert.Positive(testArray[1]);
@@ -24,7 +24,7 @@ namespace TurnBasedCombatPrototype
         [Test]
         public void Test2()
         {
-            //testArray = new int[] { 1, 2, 3 };
+            testArray = new int[] { 1, 2, 3 };
             //FillTestArray(2);
 
             Assert.GreaterOrEqual(testArray.Length, 3);
