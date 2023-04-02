@@ -9,7 +9,7 @@ namespace TurnBasedCombatPrototype
     internal class Weapon : Equipment
 
     {
-        public Weapon(string name, uint power, uint durability) : base(name, power, durability)
+        public Weapon(string name, int power, int durability, EClass classType) : base(name, power, durability, classType)
         {
         }
 
