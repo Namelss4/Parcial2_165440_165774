@@ -2,7 +2,7 @@ namespace TurnBasedCombatPrototype
 {
     public class Tests
     {
-        public int[] testArray;
+        //public int[] testArray;
         //public int testStep;
 
         //[SetUp]
@@ -73,42 +73,60 @@ namespace TurnBasedCombatPrototype
         public void EquipOnlyOnSameClasses() //1e
         {
             Character char1 = new Character("olaf", 2, 9, 0, Character.EClass.Beast);
-            Armor armor1 = new Armor("Iron", 5, -20, Equipment.EClass.Beast);
-            Weapon weapon1 = new Weapon("Axe", 3, 0, Equipment.EClass.Beast);
+            Armor armor1 = new Armor("Iron", 5, 20, Equipment.EClass.Beast);
+            Weapon weapon1 = new Weapon("Axe", 3, 6, Equipment.EClass.Beast);
 
             char1.AttachEquipment(armor1);
 
-            Weapon weapon2 = new Weapon("Axe", 3, 0, Equipment.EClass.Human);
+            Assert.IsTrue(char1.ArmorEquip == armor1);
 
-            Assert.
+            char1.AttachEquipment(weapon1);
 
-            
+            Assert.IsTrue(char1.WeaponEquip == weapon1);
+
+            Weapon weapon2 = new Weapon("Axe", 3, 6, Equipment.EClass.Human);
+
+            char1.AttachEquipment(weapon2);
+
+            Assert.IsFalse(char1.WeaponEquip == weapon2);
+
+            Armor armor2 = new Armor("Iron", 5, 20, Equipment.EClass.Human);
+
+            char1.AttachEquipment(armor2);
+
+            Assert.IsFalse(char1.ArmorEquip == armor2);
+
+            Armor armor3 = new Armor("Iron", 5, 20, Equipment.EClass.Any);
+            Weapon weapon3 = new Weapon("Axe", 3, 6, Equipment.EClass.Any);
+
+            char1.AttachEquipment(armor3);
+
+            Assert.IsTrue(char1.ArmorEquip == armor3);
+
+            char1.AttachEquipment(weapon3);
+
+            Assert.IsTrue(char1.WeaponEquip == weapon3);
+
+            Weapon weapon4 = new Weapon("Axe", 3, 6, Equipment.EClass.Hybrid);
+
+            char1.AttachEquipment(weapon4);
+
+            Assert.IsFalse(char1.WeaponEquip == weapon4);
+
+            Armor armor4 = new Armor("Iron", 5, 20, Equipment.EClass.Hybrid);
+
+            char1.AttachEquipment(armor4);
+
+            Assert.IsFalse(char1.ArmorEquip == armor4);
 
         }
 
-        //[Test]
-        //public void Test2()
-        //{
-        //    testArray = new int[] { 1, 2, 3 };
-        //    //FillTestArray(2);
-
-        //    Assert.GreaterOrEqual(testArray.Length, 3);
-        //}
-
-        //[Test]
-        //public void DecreaseArmorDurability()
-        //{
-        //    Character chare = new Character("olaf", 1, 2, 3, Character.EClass.Human);
-
-        //    //Armor arm = new Armor("1",1,10,Equipment.EClass.Any);
-        //    //arm.Durability = 0;
-
-        //}
+        
 
         [TearDown]
         public void TearDown()
         {
-            testArray = null;
+           
         }
 
         //private void FillTestArray(int testStep)

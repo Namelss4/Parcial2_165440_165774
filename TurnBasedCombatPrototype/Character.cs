@@ -62,9 +62,9 @@ namespace TurnBasedCombatPrototype
 
         public int Atk { get; private set; }
         public int Def { get; private set; }
-        public int Hp { get; private set; }
-        public Armor ArmorEquip { get; private set; }
-        public Weapon WeaponEquip { get; private set; }
+        public int Hp { get ; private set; }
+        public Armor ArmorEquip { get => armorEquip; set =>  armorEquip = ArmorEquip; }
+        public Weapon WeaponEquip { get => weaponEquip; set => weaponEquip = WeaponEquip; }
         public EClass ClassType { get; private set; }
         public string Name
         {
@@ -115,7 +115,7 @@ namespace TurnBasedCombatPrototype
 
                 } 
             }
-            else
+            else if(eq is Weapon)
             {
                 if (eq.ClassType.ToString() == ClassType.ToString() || eq.ClassType == Equipment.EClass.Any)
                 {
