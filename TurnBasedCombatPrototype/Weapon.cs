@@ -15,7 +15,15 @@ namespace TurnBasedCombatPrototype
 
         public override void DecreaseDurability()
         {
-            Durability--;          
+            if(Durability-- < 1)
+            {
+                Durability = 0;
+            }
+            else
+            {
+                Durability--;
+            }
+                    
         }
     }
 }

@@ -316,7 +316,7 @@ namespace TurnBasedCombatPrototype
             char1.Attack(char2);
 
 
-            //Assert.IsTrue(char1.WeaponEquip.Durability > -1); we ran out of time to fix this
+            //Assert.IsTrue(char1.WeaponEquip.Durability > -1); //we ran out of time to fix this.
 
         }
 
