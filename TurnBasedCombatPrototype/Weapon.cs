@@ -15,7 +15,7 @@ namespace TurnBasedCombatPrototype
 
         public override void DecreaseDurability()
         {
-            this.Durability--;          
+            Durability--;          
         }
     }
 }

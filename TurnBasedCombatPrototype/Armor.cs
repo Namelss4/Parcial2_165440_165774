@@ -12,17 +12,17 @@ namespace TurnBasedCombatPrototype
         {
         }
 
-        public override void DecreaseDurability(Character chara)
+        public override void DecreaseDurability(int val)
         {
             //uint temp = chara.Atk / 2;
 
-            if((chara.Atk / 2) == 0)
+            if((val / 2) == 0)
             {
                 Durability--;
             }
             else
             {
-                Durability -= chara.Atk / 2;
+                Durability -= val / 2;
             }
 
         }

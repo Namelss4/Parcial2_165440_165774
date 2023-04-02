@@ -9,7 +9,7 @@ namespace TurnBasedCombatPrototype
     internal class Equipment
     {
         private string name = String.Empty;
-        //private uint durability;
+        //private int durability;
 
         public enum EClass
         {
@@ -23,7 +23,7 @@ namespace TurnBasedCombatPrototype
         {
             Name = name;
 
-            if (Power > 0)
+            if (power > 0)
             {
                 Power = power;
             }
@@ -32,7 +32,7 @@ namespace TurnBasedCombatPrototype
                 Power = 1;
             }
 
-            if (Durability > 0)
+            if (durability > 0)
             {
                 Durability = durability;
             }
@@ -48,7 +48,8 @@ namespace TurnBasedCombatPrototype
 
         public int Power { get; private set; }
         //public uint Durability { get { return durability; } set { durability = value; } }
-        public int Durability { get; internal set; }
+        //public int Durability { get => durability; set => durability = Durability; }
+        public int Durability { get ; set ; }
 
         public EClass ClassType { get; private set; }
 
@@ -82,7 +83,7 @@ namespace TurnBasedCombatPrototype
         {
         }
 
-        public virtual void DecreaseDurability(Character chara)
+        public virtual void DecreaseDurability(int val)
         {
         }
 

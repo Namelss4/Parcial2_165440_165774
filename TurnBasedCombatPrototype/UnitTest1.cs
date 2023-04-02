@@ -72,7 +72,7 @@ namespace TurnBasedCombatPrototype
         [Test]
         public void EquipOnlyOnSameClasses() //1e
         {
-            Character char1 = new Character("olaf", 2, 9, 0, Character.EClass.Beast);
+            Character char1 = new Character("olaf", 2, 9, 1, Character.EClass.Beast);
             Armor armor1 = new Armor("Iron", 5, 20, Equipment.EClass.Beast);
             Weapon weapon1 = new Weapon("Axe", 3, 6, Equipment.EClass.Beast);
 
@@ -124,7 +124,7 @@ namespace TurnBasedCombatPrototype
         [Test]
         public void ChangeWeapons() //f
         {
-            Character char1 = new Character("olaf", 2, 9, 0, Character.EClass.Beast);
+            Character char1 = new Character("olaf", 2, 9, 1, Character.EClass.Beast);
             Armor armor1 = new Armor("Iron", 5, 20, Equipment.EClass.Beast);
             Weapon weapon1 = new Weapon("Axe", 3, 6, Equipment.EClass.Beast);
 
@@ -142,6 +142,114 @@ namespace TurnBasedCombatPrototype
 
             Assert.IsFalse(char1.ArmorEquip == armor1);
             Assert.IsTrue(char1.ArmorEquip == armor2);
+        }
+
+        [Test]
+        public void DecreaseDurabilityOfEquipment() //2a
+        {
+            Character char1 = new Character("Olaf", 5, 10, 10, Character.EClass.Beast);
+            Armor armor1 = new Armor("Iron", 5, 20, Equipment.EClass.Beast);
+            Weapon weapon1 = new Weapon("Axe", 3, 5, Equipment.EClass.Any);
+
+            char1.AttachEquipment(armor1);
+            char1.AttachEquipment(weapon1);
+
+            Character char2 = new Character("Kelsier", 5, 10, 20, Character.EClass.Hybrid);
+            Armor armor2 = new Armor("Cloak", 5, 20, Equipment.EClass.Hybrid);
+            Weapon weapon2 = new Weapon("Daggers", 5, 20, Equipment.EClass.Any);
+
+            char2.AttachEquipment(armor2);
+            char2.AttachEquipment(weapon2);
+
+            char1.Attack(char2);
+
+            Assert.IsTrue(char1.WeaponEquip.Durability == 4);
+            Assert.IsTrue(char2.ArmorEquip.Durability == 16);
+
+            char1.Attack(char2);
+
+            Assert.IsTrue(char1.WeaponEquip.Durability == 3);
+            Assert.IsTrue(char2.ArmorEquip.Durability == 12);
+
+        }
+
+        [Test]
+        public void DamageWeaponAgainstNoArmor() //2b
+        {
+            Character char1 = new Character("Marsh", 5, 10, 10, Character.EClass.Beast);
+            Weapon weapon1 = new Weapon("Axe", 3, 5, Equipment.EClass.Any);
+
+            char1.AttachEquipment(weapon1);
+
+            Character char2 = new Character("Kelsier", 5, 10, 20, Character.EClass.Hybrid);
+
+            char1.Attack(char2);
+
+            Assert.IsTrue(char2.Hp == 12);
+            
+        }
+
+        [Test]
+        public void DamageWeaponAgainstArmor() //2c
+        {
+            Character char1 = new Character("Marsh", 5, 10, 10, Character.EClass.Beast);
+            Weapon weapon1 = new Weapon("Axe", 3, 5, Equipment.EClass.Any);
+
+            char1.AttachEquipment(weapon1);
+
+            Character char2 = new Character("Kelsier", 5, 10, 20, Character.EClass.Hybrid);
+            Armor armor1 = new Armor("Cloak", 10, 20, Equipment.EClass.Hybrid);
+
+            char2.AttachEquipment(armor1);
+
+            char1.Attack(char2);
+
+            Assert.IsTrue(char2.Hp == 20);
+            Assert.IsTrue(char2.ArmorEquip.Durability == 16);
+        }
+
+        [Test]
+        public void DamageNoWeaponAgainstArmor() //2d
+        {
+            Character char1 = new Character("Marsh", 6, 10, 10, Character.EClass.Beast);
+
+            Character char2 = new Character("Kelsier", 5, 10, 20, Character.EClass.Hybrid);
+            Armor armor1 = new Armor("Cloak", 10, 20, Equipment.EClass.Hybrid);
+
+            char2.AttachEquipment(armor1);
+
+            char1.Attack(char2);
+
+            Assert.IsTrue(char2.Hp == 20);
+            Assert.IsTrue(char2.ArmorEquip.Durability == 17);
+        }
+
+        [Test]
+        public void DamageNoWeaponAgainstNoArmor() //2e
+        {
+            Character char1 = new Character("Marsh", 6, 10, 10, Character.EClass.Beast);
+
+            Character char2 = new Character("Kelsier", 5, 10, 20, Character.EClass.Hybrid);
+
+            char1.Attack(char2);
+
+            Assert.IsTrue(char2.Hp == 14);
+        }
+
+        [Test]
+        public void DettachWeapon() //2f
+        {
+            Character char1 = new Character("Marsh", 5, 10, 10, Character.EClass.Beast);
+            Weapon weapon1 = new Weapon("Axe", 3, 5, Equipment.EClass.Any);
+
+            char1.AttachEquipment(weapon1);
+
+            Character char2 = new Character("Kelsier", 5, 10, 20, Character.EClass.Hybrid);
+
+            char1.Attack(char2);
+
+            Assert.IsTrue(char2.Hp == 12);
+
         }
 
         [TearDown]

@@ -23,7 +23,7 @@ namespace TurnBasedCombatPrototype
         public Character(string name, int atk, int def, int hp, EClass classType)
         {
             Name = name;
-            if(Atk > 1)
+            if(atk > 1)
             {
                 Atk = atk;
             }
@@ -32,7 +32,7 @@ namespace TurnBasedCombatPrototype
                 Atk = 1;
             }
 
-            if (Def > 1)
+            if (def > 1)
             {
                 Def = def;
             }
@@ -41,7 +41,7 @@ namespace TurnBasedCombatPrototype
                 Def = 1;
             }
 
-            if (Hp > 1)
+            if (hp > 1)
             {
                 Hp = hp;
             }
@@ -126,11 +126,58 @@ namespace TurnBasedCombatPrototype
             }
         }
 
-        public void Attack(Character enemy)
+        public void Attack(Character enemy) //We read the prompt over and over again and there's no mention on how to use the Def stat, it says the damage goes directly to the hp of the enemy or the durability of its armor.
         {
-            
-        }
+            if(weaponEquip == null)
+            {
+                if(enemy.armorEquip == null)
+                {
+                    enemy.Hp = enemy.Hp - this.Atk;
+                }
+                else
+                {
+                    if (enemy.ArmorEquip.Durability > 0)
+                    {
+                        enemy.ArmorEquip.DecreaseDurability(this.Atk);
+                    }
+                    else
+                    {
+                        this.Def = this.Def - armorEquip.Power;
+                        enemy.ArmorEquip = null;
+                    }
+                }
+            }
+            else
+            {
+                if(enemy.armorEquip == null)
+                {
+                    enemy.Hp = enemy.Hp - this.Atk;
+                }
+                else
+                {
+                    if (enemy.ArmorEquip.Durability > 0)
+                    {
+                        enemy.ArmorEquip.DecreaseDurability(this.Atk);
+                    }
+                    else
+                    {
+                        this.Def = this.Def - armorEquip.Power;
+                        enemy.ArmorEquip = null;
+                    }
+                    
+                }
 
+                if (this.weaponEquip.Durability > 0)
+                {
+                    this.weaponEquip.Durability = this.weaponEquip.Durability - 1;
+                }
+                else
+                {
+                    this.Atk = this.Atk - weaponEquip.Power;
+                    this.weaponEquip = null;
+                }    
+            }
+        }
 
     }
 }
