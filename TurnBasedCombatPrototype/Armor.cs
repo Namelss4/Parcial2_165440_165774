@@ -18,13 +18,27 @@ namespace TurnBasedCombatPrototype
 
             if((val / 2) == 0)
             {
-                Durability--;
+                if(Durability-- < 0)
+                {
+                    Durability = 0;
+                }
+                else
+                {
+                    Durability--;
+                }
+                
             }
             else
             {
-                Durability -= val / 2;
+                if (Durability - (val / 2) < 0)
+                {
+                    Durability = 0;
+                }
+                else
+                {
+                    Durability -= val / 2;
+                } 
             }
-
         }
     }
 }

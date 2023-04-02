@@ -132,13 +132,26 @@ namespace TurnBasedCombatPrototype
             {
                 if(enemy.armorEquip == null)
                 {
-                    enemy.Hp = enemy.Hp - this.Atk;
+                    if (enemy.Hp - this.Atk < 0)
+                    {
+                        enemy.Hp = 0;
+                    }
+                    else
+                    {
+                        enemy.Hp = enemy.Hp - this.Atk;
+                    }
                 }
                 else
                 {
                     if (enemy.ArmorEquip.Durability > 0)
                     {
                         enemy.ArmorEquip.DecreaseDurability(this.Atk);
+
+                        //if (enemy.ArmorEquip.Durability < 1)
+                        //{
+                        //    this.Def = this.Def - armorEquip.Power;
+                        //    enemy.armorEquip = null;
+                        //}
                     }
                     else
                     {
@@ -151,25 +164,43 @@ namespace TurnBasedCombatPrototype
             {
                 if(enemy.armorEquip == null)
                 {
-                    enemy.Hp = enemy.Hp - this.Atk;
+                    if(enemy.Hp - this.Atk < 0)
+                    {
+                        enemy.Hp = 0;
+                    }
+                    else
+                    {
+                        enemy.Hp = enemy.Hp - this.Atk;
+                    }     
                 }
                 else
                 {
                     if (enemy.ArmorEquip.Durability > 0)
                     {
                         enemy.ArmorEquip.DecreaseDurability(this.Atk);
+
+                        //if (enemy.ArmorEquip.Durability < 1)
+                        //{
+                        //    this.Def = this.Def - armorEquip.Power;
+                        //    enemy.armorEquip = null;
+                        //}
                     }
                     else
                     {
                         this.Def = this.Def - armorEquip.Power;
-                        enemy.ArmorEquip = null;
-                    }
-                    
+                        enemy.armorEquip = null;
+                    }                  
                 }
 
                 if (this.weaponEquip.Durability > 0)
                 {
                     this.weaponEquip.Durability = this.weaponEquip.Durability - 1;
+
+                    if(this.weaponEquip.Durability < 1)
+                    {
+                        this.Atk = this.Atk - weaponEquip.Power;
+                        this.weaponEquip = null;
+                    }
                 }
                 else
                 {
@@ -178,6 +209,5 @@ namespace TurnBasedCombatPrototype
                 }    
             }
         }
-
     }
 }

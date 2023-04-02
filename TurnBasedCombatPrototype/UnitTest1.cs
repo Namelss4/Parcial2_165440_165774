@@ -2,14 +2,6 @@ namespace TurnBasedCombatPrototype
 {
     public class Tests
     {
-        //public int[] testArray;
-        //public int testStep;
-
-        //[SetUp]
-        //public void Setup()
-        //{
-        //    testArray = new int[] { 1, 2, 3 };
-        //}
 
         [Test]
         public void NoAttributeIsNegative() //1a
@@ -239,37 +231,93 @@ namespace TurnBasedCombatPrototype
         [Test]
         public void DettachWeapon() //2f
         {
-            Character char1 = new Character("Marsh", 5, 10, 10, Character.EClass.Beast);
-            Weapon weapon1 = new Weapon("Axe", 3, 5, Equipment.EClass.Any);
+            Character char1 = new Character("Marsh", 2, 10, 10, Character.EClass.Beast);
+            Weapon weapon1 = new Weapon("Axe", 2, 2, Equipment.EClass.Any);
 
             char1.AttachEquipment(weapon1);
 
-            Character char2 = new Character("Kelsier", 5, 10, 20, Character.EClass.Hybrid);
+            Character char2 = new Character("Kelsier", 5, 10, 70, Character.EClass.Hybrid);
+
+            char1.Attack(char2);
+            char1.Attack(char2);
+
+            Assert.IsNull(char1.WeaponEquip);
+        }
+
+        [Test]
+        public void DettachArmor() //2g
+        {
+            Character char1 = new Character("Marsh", 10, 10, 10, Character.EClass.Beast);
+            Weapon weapon1 = new Weapon("Axe", 10, 2, Equipment.EClass.Any);
+
+            char1.AttachEquipment(weapon1);
+
+            Character char2 = new Character("Kelsier", 50, 40, 70, Character.EClass.Hybrid);
+            Armor armor1 = new Armor("Cloak", 2, 8, Equipment.EClass.Hybrid);
+
+            char2.AttachEquipment(armor1);
 
             char1.Attack(char2);
 
-            Assert.IsTrue(char2.Hp == 12);
+            Assert.IsNull(char1.ArmorEquip);
 
         }
 
-        [TearDown]
-        public void TearDown()
+        [Test]
+        public void NonNegativeHp() //2h
         {
-           
+            Character char1 = new Character("Marsh", 40, 10, 10, Character.EClass.Beast);
+            Weapon weapon1 = new Weapon("Axe", 10, 2, Equipment.EClass.Any);
+
+            char1.AttachEquipment(weapon1);
+
+            Character char2 = new Character("Kelsier", 50, 40, 10, Character.EClass.Hybrid);
+
+            char1.Attack(char2);
+
+            Assert.IsTrue(char2.Hp > -1);
+
         }
 
-        //private void FillTestArray(int testStep)
-        //{
-        //    switch (testStep)
-        //    {
-        //        case 2:
-        //            testArray = new int[] { 1, 2, 3 };
-        //            break;
+        [Test]
+        public void NonNegativeDurabilityOnArmor() //2i
+        {
+            Character char1 = new Character("Marsh", 40, 10, 10, Character.EClass.Beast);
+            Weapon weapon1 = new Weapon("Axe", 10, 2, Equipment.EClass.Any);
 
-        //        default:
-        //            testArray = new int[] { 1, 2, 3 };
-        //            break;
-        //    }
-        //}
+            char1.AttachEquipment(weapon1);
+
+            Character char2 = new Character("Kelsier", 50, 40, 10, Character.EClass.Hybrid);
+            Armor armor1 = new Armor("Cloak", 20, 2, Equipment.EClass.Hybrid);
+
+            char2.AttachEquipment(armor1);
+
+            char1.Attack(char2);
+
+            Assert.IsTrue(char2.ArmorEquip.Durability > -1);
+
+        }
+
+        [Test]
+        public void NonNegativeDurabilityOnWeapon() //2j
+        {
+            Character char1 = new Character("Marsh", 5, 30, 10, Character.EClass.Beast);
+            Weapon weapon1 = new Weapon("Axe", 20, 2, Equipment.EClass.Any);
+
+            char1.AttachEquipment(weapon1);
+
+            Character char2 = new Character("Kelsier", 50, 40, 10, Character.EClass.Hybrid);
+            Armor armor1 = new Armor("Cloak", 20, 40, Equipment.EClass.Hybrid);
+
+            char2.AttachEquipment(armor1);
+
+            char1.Attack(char2);
+            char1.Attack(char2);
+            char1.Attack(char2);
+
+
+            Assert.IsTrue(char1.WeaponEquip.Durability > -1);
+
+        }
     }
 }
