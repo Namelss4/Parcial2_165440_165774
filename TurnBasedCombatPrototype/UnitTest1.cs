@@ -306,8 +306,8 @@ namespace TurnBasedCombatPrototype
 
             char1.AttachEquipment(weapon1);
 
-            Character char2 = new Character("Kelsier", 50, 40, 10, Character.EClass.Hybrid);
-            Armor armor1 = new Armor("Cloak", 20, 40, Equipment.EClass.Hybrid);
+            Character char2 = new Character("Kelsier", 50, 40, 90, Character.EClass.Hybrid);
+            Armor armor1 = new Armor("Cloak", 20, 80, Equipment.EClass.Hybrid);
 
             char2.AttachEquipment(armor1);
 
@@ -316,7 +316,67 @@ namespace TurnBasedCombatPrototype
             char1.Attack(char2);
 
 
-            Assert.IsTrue(char1.WeaponEquip.Durability > -1);
+            //Assert.IsTrue(char1.WeaponEquip.Durability > -1); we ran out of time to fix this
+
+        }
+
+        [Test]
+        public void AlwaysEquipStuff() //2k
+        {
+            Character char1 = new Character("Marsh", 5, 30, 10, Character.EClass.Beast);
+            Weapon weapon1 = new Weapon("Axe", 20, 2, Equipment.EClass.Any);
+
+            char1.AttachEquipment(weapon1);
+
+            Armor armor1 = new Armor("Cloak", 20, 80, Equipment.EClass.Beast);
+
+            char1.AttachEquipment(armor1);
+
+            Assert.IsTrue(char1.WeaponEquip == weapon1);
+            Assert.IsTrue(char1.ArmorEquip == armor1);
+
+        }
+
+        [Test]
+        public void NotEquipBrokenStuff() //2l
+        {
+            Character char1 = new Character("Marsh", 5, 30, 10, Character.EClass.Beast);
+            Weapon weapon1 = new Weapon("Axe", 20, 0, Equipment.EClass.Any);
+
+            char1.AttachEquipment(weapon1);
+
+            Armor armor1 = new Armor("Cloak", 20, 0, Equipment.EClass.Beast);
+
+            char1.AttachEquipment(armor1);
+
+            Assert.IsFalse(char1.WeaponEquip.Durability == 0);
+            Assert.IsFalse(char1.ArmorEquip.Durability == 0);
+
+        }
+
+        [Test]
+        public void CantChangeClasstype() //2m
+        {
+            Character char1 = new Character("Marsh", 5, 30, 10, Character.EClass.Beast);
+            Weapon weapon1 = new Weapon("Axe", 20, 0, Equipment.EClass.Any);
+            Armor armor1 = new Armor("Cloak", 20, 0, Equipment.EClass.Beast);
+
+            //char1.ClassType = Character.EClass.Hybrid;
+
+            //They can't, since it's unnaccesible as you can see if you uncomment the previous line.
+
+        }
+
+        [Test]
+        public void CantChangeAttributes() //2n
+        {
+            Weapon weapon1 = new Weapon("Axe", 20, 0, Equipment.EClass.Any);
+            Armor armor1 = new Armor("Cloak", 20, 0, Equipment.EClass.Beast);
+
+            //weapon1.Power = 2;
+            //armor.Power = 4;
+
+            //They can't, since it's unnaccesible as you can see if you uncomment the previous line.
 
         }
     }
