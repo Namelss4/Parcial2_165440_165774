@@ -121,7 +121,28 @@ namespace TurnBasedCombatPrototype
 
         }
 
-        
+        [Test]
+        public void ChangeWeapons() //f
+        {
+            Character char1 = new Character("olaf", 2, 9, 0, Character.EClass.Beast);
+            Armor armor1 = new Armor("Iron", 5, 20, Equipment.EClass.Beast);
+            Weapon weapon1 = new Weapon("Axe", 3, 6, Equipment.EClass.Beast);
+
+            char1.AttachEquipment(armor1);
+            char1.AttachEquipment(weapon1);
+
+            Armor armor2 = new Armor("Gold", 6, 6, Equipment.EClass.Beast);
+            Weapon weapon2 = new Weapon("Sword", 5, 40, Equipment.EClass.Beast);
+
+            char1.AttachEquipment(armor2);
+            char1.AttachEquipment(weapon2);
+
+            Assert.IsFalse(char1.WeaponEquip == weapon1);
+            Assert.IsTrue(char1.WeaponEquip == weapon2);
+
+            Assert.IsFalse(char1.ArmorEquip == armor1);
+            Assert.IsTrue(char1.ArmorEquip == armor2);
+        }
 
         [TearDown]
         public void TearDown()
